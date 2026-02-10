@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🐋 Crypto Watchtower Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0d1117;
+            color: #c9d1d9;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .container { max-width: 1200px; margin: 0 auto; }
+        header {
+            text-align: center;
+            padding: 30px 0;
+            border-bottom: 1px solid #30363d;
+            margin-bottom: 30px;
+        }
+        h1 { font-size: 2.5em; margin-bottom: 10px; }
+        .subtitle { color: #8b949e; font-size: 1.1em; }
+        .timestamp { color: #58a6ff; margin-top: 10px; font-size: 0.9em; }
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .card {
+            background: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+        }
+        .card-value { font-size: 2em; font-weight: bold; color: #58a6ff; }
+        .card-label { color: #8b949e; margin-top: 5px; }
+        .card-gainer .card-value { color: #238636; }
+        .card-loser .card-value { color: #da3633; }
+        .section {
+            background: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        .section h2 {
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #30363d;
+        }
+        .chart-container { height: 400px; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #30363d;
+        }
+        th { color: #8b949e; font-weight: 600; }
+        .positive { color: #238636; }
+        .negative { color: #da3633; }
+        .badge {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+        .badge-moderate { background: #9e6a03; color: #fff; }
+        .badge-high { background: #bd561d; color: #fff; }
+        .badge-extreme { background: #da3633; color: #fff; }
+        .calm-message {
+            text-align: center;
+            padding: 40px;
+            color: #238636;
+            font-size: 1.2em;
+        }
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            color: #8b949e;
+            border-top: 1px solid #30363d;
+            margin-top: 30px;
+        }
+        footer a { color: #58a6ff; text-decoration: none; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🐋 Crypto Watchtower Dashboard</h1>
+            <p class="subtitle">24/7 Automated Market Monitoring</p>
+            <p class="timestamp">Last updated: 2026-02-10 02:49:06 UTC</p>
+        </header>
+
+        <div class="cards">
+            <div class="card">
+                <div class="card-value">10</div>
+                <div class="card-label">Coins Tracked</div>
+            </div>
+            <div class="card">
+                <div class="card-value">0</div>
+                <div class="card-label">Whale Alerts</div>
+            </div>
+            <div class="card card-gainer">
+                <div class="card-value">FIGR_HELOC</div>
+                <div class="card-label">Biggest Gainer (+1.33%)</div>
+            </div>
+            <div class="card card-loser">
+                <div class="card-value">BTC</div>
+                <div class="card-label">Biggest Loser (-0.98%)</div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>📊 24h Price Change</h2>
+            <div class="chart-container">
+                <canvas id="priceChart"></canvas>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>🐋 Whale Alerts</h2>
+            <div class="calm-message">✅ No whale movements detected — market is calm.</div>
+        </div>
+
+        <div class="section">
+            <h2>📈 Market Data</h2>
+            <table>
+                <thead>
+                    <tr><th>Name</th><th>Symbol</th><th>Price (USD)</th><th>Market Cap</th><th>24h Volume</th><th>24h Change</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>Bitcoin</td><td>BTC</td><td>$70,028.00</td><td>$1,399,356,359,648</td><td>$53,938,360,565</td><td class="negative">-0.98%</td></tr><tr><td>Ethereum</td><td>ETH</td><td>$2,104.34</td><td>$253,881,485,871</td><td>$24,483,548,594</td><td class="positive">+0.87%</td></tr><tr><td>Tether</td><td>USDT</td><td>$1.00</td><td>$184,426,105,270</td><td>$85,178,765,107</td><td class="positive">+0.02%</td></tr><tr><td>XRP</td><td>XRP</td><td>$1.44</td><td>$87,999,740,782</td><td>$3,399,126,720</td><td class="positive">+0.05%</td></tr><tr><td>BNB</td><td>BNB</td><td>$637.52</td><td>$86,911,780,897</td><td>$1,202,468,805</td><td class="negative">-0.80%</td></tr><tr><td>USDC</td><td>USDC</td><td>$1.00</td><td>$73,030,301,612</td><td>$8,878,153,386</td><td class="positive">+0.00%</td></tr><tr><td>Solana</td><td>SOL</td><td>$86.50</td><td>$49,092,712,470</td><td>$4,187,194,622</td><td class="negative">-0.71%</td></tr><tr><td>TRON</td><td>TRX</td><td>$0.28</td><td>$26,504,490,936</td><td>$605,953,952</td><td class="positive">+0.71%</td></tr><tr><td>Dogecoin</td><td>DOGE</td><td>$0.10</td><td>$16,173,509,384</td><td>$887,224,683</td><td class="negative">-0.87%</td></tr><tr><td>Figure Heloc</td><td>FIGR_HELOC</td><td>$1.03</td><td>$15,505,379,274</td><td>$9,738,142</td><td class="positive">+1.33%</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <footer>
+            <p>Powered by CoinGecko API • Generated by GitHub Copilot Agents</p>
+        </footer>
+    </div>
+
+    <script>
+        const ctx = document.getElementById('priceChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ["BTC", "ETH", "USDT", "XRP", "BNB", "USDC", "SOL", "TRX", "DOGE", "FIGR_HELOC"],
+                datasets: [{
+                    label: '24h Change %',
+                    data: [-0.97966, 0.86529, 0.01984, 0.04731, -0.80168, 0.00419, -0.715, 0.71041, -0.87382, 1.33002],
+                    backgroundColor: ["#da3633", "#238636", "#238636", "#238636", "#da3633", "#238636", "#da3633", "#238636", "#da3633", "#238636"],
+                    borderRadius: 4
+                }]
+            },
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    x: {
+                        grid: { color: '#30363d' },
+                        ticks: { color: '#8b949e' }
+                    },
+                    y: {
+                        grid: { display: false },
+                        ticks: { color: '#c9d1d9' }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
