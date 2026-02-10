@@ -12,7 +12,3 @@
 - Automatically align the variables to the column names
 - Output the csv file to the data folder
 
-## Exploration
-
-- Generate a exploratory data analysis report of the dataset using the Quarto.
-
